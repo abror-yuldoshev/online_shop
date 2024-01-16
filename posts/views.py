@@ -120,13 +120,22 @@ class SubCategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
 
 
 # Post Image CRUD API View
-class PostListApiView(generics.ListAPIView, ):
+class PostListApiView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [
         AllowAny,
     ]
     pagination_class = CustomPagination
+
+
+class PostDetailApiView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [
+        AllowAny,
+    ]
+    lookup_field = "id"
 
 
 class PostCreateView(generics.CreateAPIView):
