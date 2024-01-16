@@ -10,7 +10,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from shred.permission import AdminPermission
-from shred.throttling import SendCodeThrottle
 from shred.utility import send_email
 from users.models import User, NEW, CODE_VERIFIED, VIA_PHONE, VIA_EMAIL
 from users.serializers import SignUpSerializers, ChangeUserInformation, LoginSerializer, LoginRefreshSerializer, \

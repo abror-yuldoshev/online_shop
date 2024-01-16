@@ -22,10 +22,6 @@ from posts.serializers import (
 from shred.custom_pagination import CustomPagination
 from shred.permission import AdminPermission
 
-from hitcount.views import View
-
-from shred.throttling import PostLikeThrottle
-
 
 # Category CRUD API View
 class CategoryListAPIView(generics.ListAPIView):
@@ -124,7 +120,7 @@ class SubCategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
 
 
 # Post Image CRUD API View
-class PostListApiView(generics.ListAPIView,):
+class PostListApiView(generics.ListAPIView, ):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [

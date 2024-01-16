@@ -1,17 +1,22 @@
+import os
 from datetime import timedelta
 from pathlib import Path
 
-from decouple import config
+import environ
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, True)
+)
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = "django-insecure-#ublj5s!d0y=fz8qq$sgy7ca2oudxta0v4=w7=wk40@cp_18-c"
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG')
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -27,14 +32,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # packages
-
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework.authtoken",  # yangi
     "phonenumbers",
-    'twilio',
     "hitcount",
     "drf_yasg",
+    'twilio',
+
     # local app
     "users",
     "posts",
@@ -130,11 +135,11 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config("DB_NAME"),
-        "USER": config('USER'),
-        "PASSWORD": config("PASSWORD"),
-        "HOST": config("HOST"),
-        "PORT": config("PORT")
+        'NAME': env('DB_NAME'),
+        "USER": env('DB_USERNAME'),
+        "PASSWORD": env('DB_PASSWORD'),
+        "HOST": env('HOST'),
+        "PORT": '5432'
     }
 }
 
@@ -171,13 +176,15 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'prodeveloper502@gmail.com'
-EMAIL_HOST_PASSWORD = 'oewx sivy ndrw vbhr'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media/"
 
